@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BeeperApp</string>
+    <string name="strBtnSearch">Cerca</string>
 </resources>
