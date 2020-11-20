@@ -1,5 +1,6 @@
 package it.proxy.beeperapp.repository
 
+import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -12,71 +13,79 @@ import retrofit2.Response
 
 class PersonRepository {
 
+    var resultList = ArrayList<PersonItem>()
+    var haveResult = false
+
     val retrofitInstance = PersonRetrofitInstance
         .getPersonRetrofitInstance()
         .create(PersonService::class.java)
 
-    suspend fun getPersonById(id: String, lifeCycleOwner: LifecycleOwner): Person {
-        lateinit var resultId: Person
+    suspend fun getPersonById(id: String, lifeCycleOwner: LifecycleOwner) {
         val personLiveData: LiveData<Response<Person>> = liveData {
             val response = retrofitInstance.getPersonById(id)
             emit(response)
         }
         personLiveData.observe(lifeCycleOwner, Observer {
-            val result = it.body()!!
-            val iterator = result.listIterator()
-            while (iterator.hasNext()) {
-                resultId.add(iterator.next())
+            val iterator = it.body()!!.listIterator()
+            if (!iterator.hasNext()) haveResult = false
+            else {
+                while (iterator.hasNext()) {
+                    haveResult = true
+                    resultList.add(iterator.next())
+                }
             }
         })
-        return resultId
     }
 
-    suspend fun getPersonByName(name: String, lifeCycleOwner: LifecycleOwner): Person {
-        lateinit var resultName: Person
+    suspend fun getPersonByName(name: String, lifeCycleOwner: LifecycleOwner) {
         val personLiveData: LiveData<Response<Person>> = liveData {
-            val response = retrofitInstance.getPersonById(name)
+            val response = retrofitInstance.getPersonByName(name)
             emit(response)
         }
         personLiveData.observe(lifeCycleOwner, Observer {
-            val result = it.body()!!
-            val iterator = result.listIterator()
-            while (iterator.hasNext()) {
-                resultName.add(iterator.next())
+            val iterator = it.body()!!.listIterator()
+            if (!iterator.hasNext()) haveResult = false
+            else {
+                while (iterator.hasNext()) {
+                    haveResult = true
+                    resultList.add(iterator.next())
+                }
             }
+            Log.i(PersonRepository::class.simpleName, resultList.toString())
         })
-        return resultName
     }
 
-    suspend fun getPersonBySurname(surname: String, lifeCycleOwner: LifecycleOwner): Person {
-        lateinit var resultSurname: Person
+    suspend fun getPersonBySurname(surname: String, lifeCycleOwner: LifecycleOwner) {
         val personLiveData: LiveData<Response<Person>> = liveData {
-            val response = retrofitInstance.getPersonById(surname)
+            val response = retrofitInstance.getPersonBySurname(surname)
             emit(response)
         }
         personLiveData.observe(lifeCycleOwner, Observer {
-            val result = it.body()!!
-            val iterator = result.listIterator()
-            while (iterator.hasNext()) {
-                resultSurname.add(iterator.next())
+            val iterator = it.body()!!.listIterator()
+            if (!iterator.hasNext()) haveResult = false
+            else {
+                while (iterator.hasNext()) {
+                    haveResult = true
+                    resultList.add(iterator.next())
+                }
             }
         })
-        return resultSurname
     }
 
-    suspend fun getPersonByPhoneNumber(phoneNumber: String, lifeCycleOwner: LifecycleOwner): Person {
-        lateinit var resultPhoneNumber: Person
+    suspend fun getPersonByPhoneNumber(phoneNumber: String, lifeCycleOwner: LifecycleOwner) {
         val personLiveData: LiveData<Response<Person>> = liveData {
-            val response = retrofitInstance.getPersonById(phoneNumber)
+            val response = retrofitInstance.getPersonByPhoneNumber(phoneNumber)
             emit(response)
         }
         personLiveData.observe(lifeCycleOwner, Observer {
-            val result = it.body()!!
-            val iterator = result.listIterator()
-            while (iterator.hasNext()) {
-                resultPhoneNumber.add(iterator.next())
+            val iterator = it.body()!!.listIterator()
+            if (!iterator.hasNext()) haveResult = false
+            else {
+                while (iterator.hasNext()) {
+                    haveResult = true
+                    resultList.add(iterator.next())
+                }
             }
         })
-        return resultPhoneNumber
     }
 }

@@ -77,6 +77,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
+                android:text="@={PersonViewModel.input}"
                 android:layout_height="wrap_content"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -92,6 +93,25 @@
             android:layout_marginHorizontal="20dp"
             android:text="@string/strBtnSearch"
             android:onClick="@{()->PersonViewModel.search()}"/>
+
+        <TextView
+            android:id="@+id/txtNoResults"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/person_search"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/grey"
+            android:text="Nessun risultato."
+            android:textColor="@color/grey"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:elevation="10dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnSearch"
+            app:layout_constraintVertical_bias="0.309" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerPerson"
