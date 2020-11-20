@@ -28,7 +28,7 @@ class SearchFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
         personRepository = PersonRepository()
-        personViewModelFactory = PersonViewModelFactory(personRepository, binding,this)
+        personViewModelFactory = PersonViewModelFactory(personRepository, binding, requireActivity(), this)
         viewModel = ViewModelProvider(requireActivity(), personViewModelFactory).get(PersonViewModel::class.java)
         binding.personViewModel = viewModel
         binding.recyclerPerson.layoutManager = LinearLayoutManager(activity)

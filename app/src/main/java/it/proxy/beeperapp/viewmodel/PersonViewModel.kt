@@ -1,7 +1,9 @@
 package it.proxy.beeperapp.viewmodel
 
 
+import android.app.Activity
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.*
 import it.proxy.beeperapp.adapter.PersonRecyclerViewAdapter
 import it.proxy.beeperapp.databinding.FragmentSearchBinding
@@ -12,6 +14,7 @@ import kotlinx.coroutines.*
 class PersonViewModel(
         private val repository: PersonRepository,
         val binding: FragmentSearchBinding,
+        private val activity: Activity,
         private val lifecycleOwner: LifecycleOwner): ViewModel() {
 
     var inputType = MutableLiveData<String>()
@@ -19,6 +22,9 @@ class PersonViewModel(
     var list = mutableListOf<PersonItem>()
 
     fun search() {
+        val inputMethodManager = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(activity.currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+
         when(inputType.value) {
             "Nome" -> {
                 input.observe(lifecycleOwner, Observer {

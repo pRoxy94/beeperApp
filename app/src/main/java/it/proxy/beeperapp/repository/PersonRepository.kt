@@ -14,7 +14,7 @@ import retrofit2.Response
 class PersonRepository {
 
     var resultList = ArrayList<PersonItem>()
-    var haveResult = false
+    var haveResult = true
 
     val retrofitInstance = PersonRetrofitInstance
         .getPersonRetrofitInstance()
@@ -38,54 +38,60 @@ class PersonRepository {
     }
 
     suspend fun getPersonByName(name: String, lifeCycleOwner: LifecycleOwner) {
-        val personLiveData: LiveData<Response<Person>> = liveData {
-            val response = retrofitInstance.getPersonByName(name)
-            emit(response)
-        }
-        personLiveData.observe(lifeCycleOwner, Observer {
-            val iterator = it.body()!!.listIterator()
-            if (!iterator.hasNext()) haveResult = false
-            else {
-                while (iterator.hasNext()) {
-                    haveResult = true
-                    resultList.add(iterator.next())
-                }
+        if (name.isNotEmpty() || name != "") {
+            val personLiveData: LiveData<Response<Person>> = liveData {
+                val response = retrofitInstance.getPersonByName(name)
+                emit(response)
             }
-            Log.i(PersonRepository::class.simpleName, resultList.toString())
-        })
+            personLiveData.observe(lifeCycleOwner, Observer {
+                val iterator = it.body()!!.listIterator()
+                if (!iterator.hasNext()) haveResult = false
+                else {
+                    while (iterator.hasNext()) {
+                        haveResult = true
+                        resultList.add(iterator.next())
+                    }
+                }
+                Log.i(PersonRepository::class.simpleName, resultList.toString())
+            })
+        } else haveResult = false
     }
 
     suspend fun getPersonBySurname(surname: String, lifeCycleOwner: LifecycleOwner) {
-        val personLiveData: LiveData<Response<Person>> = liveData {
-            val response = retrofitInstance.getPersonBySurname(surname)
-            emit(response)
-        }
-        personLiveData.observe(lifeCycleOwner, Observer {
-            val iterator = it.body()!!.listIterator()
-            if (!iterator.hasNext()) haveResult = false
-            else {
-                while (iterator.hasNext()) {
-                    haveResult = true
-                    resultList.add(iterator.next())
-                }
+        if (surname.isNotEmpty() || surname != "") {
+            val personLiveData: LiveData<Response<Person>> = liveData {
+                val response = retrofitInstance.getPersonBySurname(surname)
+                emit(response)
             }
-        })
+            personLiveData.observe(lifeCycleOwner, Observer {
+                val iterator = it.body()!!.listIterator()
+                if (!iterator.hasNext()) haveResult = false
+                else {
+                    while (iterator.hasNext()) {
+                        haveResult = true
+                        resultList.add(iterator.next())
+                    }
+                }
+            })
+        } else haveResult = false
     }
 
     suspend fun getPersonByPhoneNumber(phoneNumber: String, lifeCycleOwner: LifecycleOwner) {
-        val personLiveData: LiveData<Response<Person>> = liveData {
-            val response = retrofitInstance.getPersonByPhoneNumber(phoneNumber)
-            emit(response)
-        }
-        personLiveData.observe(lifeCycleOwner, Observer {
-            val iterator = it.body()!!.listIterator()
-            if (!iterator.hasNext()) haveResult = false
-            else {
-                while (iterator.hasNext()) {
-                    haveResult = true
-                    resultList.add(iterator.next())
-                }
+        if (phoneNumber.isNotEmpty() || phoneNumber != "") {
+            val personLiveData: LiveData<Response<Person>> = liveData {
+                val response = retrofitInstance.getPersonByPhoneNumber(phoneNumber)
+                emit(response)
             }
-        })
+            personLiveData.observe(lifeCycleOwner, Observer {
+                val iterator = it.body()!!.listIterator()
+                if (!iterator.hasNext()) haveResult = false
+                else {
+                    while (iterator.hasNext()) {
+                        haveResult = true
+                        resultList.add(iterator.next())
+                    }
+                }
+            })
+        } else haveResult = false
     }
 }

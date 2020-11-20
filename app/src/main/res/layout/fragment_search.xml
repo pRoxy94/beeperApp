@@ -38,6 +38,7 @@
             app:layout_constraintTop_toBottomOf="@id/txtSearchFor"
             app:layout_constraintBottom_toTopOf="@id/input"
             android:gravity="center_horizontal"
+            android:layout_marginTop="20dp"
             app:singleSelection="true"
             android:layout_marginHorizontal="20dp">
 
@@ -78,6 +79,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:text="@={PersonViewModel.input}"
+                android:inputType="textCapWords"
                 android:layout_height="wrap_content"/>
 
         </com.google.android.material.textfield.TextInputLayout>
