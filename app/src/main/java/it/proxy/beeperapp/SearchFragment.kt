@@ -28,7 +28,7 @@ class SearchFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
         personRepository = PersonRepository()
-        personViewModelFactory = PersonViewModelFactory(personRepository, this)
+        personViewModelFactory = PersonViewModelFactory(personRepository, binding, requireActivity(), this)
         viewModel = ViewModelProvider(requireActivity(), personViewModelFactory).get(PersonViewModel::class.java)
         binding.personViewModel = viewModel
         binding.recyclerPerson.layoutManager = LinearLayoutManager(activity)
@@ -51,16 +51,11 @@ class SearchFragment : Fragment() {
                     }
                 }
             }
-            btnSearch.setOnClickListener {
-                recyclerPerson.adapter!!.notifyDataSetChanged()
-                Log.i(SearchFragment::class.simpleName, recyclerPerson.adapter.toString())
-            }
         }
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SearchFragment().apply {}
+        fun newInstance() = SearchFragment().apply {}
     }
 }
