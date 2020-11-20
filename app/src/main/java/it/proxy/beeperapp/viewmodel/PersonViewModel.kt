@@ -4,11 +4,8 @@ import androidx.databinding.Bindable
 import androidx.lifecycle.*
 import it.proxy.beeperapp.repository.PersonRepository
 import it.proxy.beeperapp.rest.Person
-import it.proxy.beeperapp.rest.PersonItem
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 
 class PersonViewModel(private val repository: PersonRepository, private val lifecycleOwner: LifecycleOwner): ViewModel() {
 
@@ -18,16 +15,15 @@ class PersonViewModel(private val repository: PersonRepository, private val life
     @Bindable
     val input = MutableLiveData<String>()
 
-    suspend fun search() {
-        var aList = viewModelScope.async(Dispatchers.IO) {
-            var list = mutableListOf<PersonItem>()
+    suspend fun search(): Person {
+        val list = viewModelScope.async(Dispatchers.IO) {
             when(inputType.value) {
-                "Nome" -> list = repository.getPersonByName(input.value!!, lifecycleOwner)
-                "Cognome" -> list = repository.getPersonBySurname(input.value!!, lifecycleOwner)
-                "Telefono" -> list = repository.getPersonByPhoneNumber(input.value!!, lifecycleOwner)
+                "Nome" -> repository.getPersonByName(input.value!!, lifecycleOwner)
+                "Cognome" -> repository.getPersonBySurname(input.value!!, lifecycleOwner)
+                "Telefono" -> repository.getPersonByPhoneNumber(input.value!!, lifecycleOwner)
+                else -> repository.getPersonByName(input.value!!, lifecycleOwner)
             }
-            return@async list
         }
-//        return aList
+        return list.await()
     }
 }
