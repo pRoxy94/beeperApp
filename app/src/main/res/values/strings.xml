@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">BeeperApp</string>
     <string name="strBtnSearch">Cerca</string>
-    <string name="strSearchFor">Cerca per...</string>
+    <string name="strSearchFor">Seleziona il tipo di ricerca</string>
+    <string name="strBtnName">Nome</string>
+    <string name="strBtnSurname">Cognome</string>
+    <string name="strBtnPhoneNumber">Telefono</string>
 </resources>

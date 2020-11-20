@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import com.google.android.material.button.MaterialButtonToggleGroup
+import it.proxy.beeperapp.adapter.PersonRecyclerViewAdapter
 import it.proxy.beeperapp.databinding.FragmentSearchBinding
 
 class SearchFragment : Fragment() {
@@ -18,6 +20,20 @@ class SearchFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.apply {
+            recyclerPerson.adapter = personViewModel.recyclerViewAdapter.value
+
+            toggleGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
+                when {
+                    btnName.id == checkedId -> personViewModel.inputType.value = btnName.text.toString()
+                    btnSurname.id == checkedId -> personViewModel.inputType.value = btnSurname.text.toString()
+                    btnPhoneNumber.id == checkedId -> personViewModel.inputType.value = btnPhoneNumber.text.toString()
+                }
+            }
+        }
     }
 
     companion object {
