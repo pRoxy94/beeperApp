@@ -1,29 +1,52 @@
 package it.proxy.beeperapp.viewmodel
 
-import androidx.databinding.Bindable
+
 import androidx.lifecycle.*
 import it.proxy.beeperapp.repository.PersonRepository
-import it.proxy.beeperapp.rest.Person
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
+import it.proxy.beeperapp.rest.PersonItem
+import kotlinx.coroutines.*
 
-class PersonViewModel(private val repository: PersonRepository, private val lifecycleOwner: LifecycleOwner): ViewModel() {
+class PersonViewModel(
+        private val repository: PersonRepository,
+        private val lifecycleOwner: LifecycleOwner): ViewModel() {
 
-    @Bindable
-    val inputType = MutableLiveData<String>()
+    var inputType = MutableLiveData<String>()
+    var input = MutableLiveData<String>()
+    var list = listOf(
+            PersonItem("Laricchia", "1", "Rossana", "0804559184"),
+            PersonItem("Laricchia", "2", "Rossana", "0804559184")
+    )
 
-    @Bindable
-    val input = MutableLiveData<String>()
-
-    suspend fun search(): Person {
-        val list = viewModelScope.async(Dispatchers.IO) {
-            when(inputType.value) {
-                "Nome" -> repository.getPersonByName(input.value!!, lifecycleOwner)
-                "Cognome" -> repository.getPersonBySurname(input.value!!, lifecycleOwner)
-                "Telefono" -> repository.getPersonByPhoneNumber(input.value!!, lifecycleOwner)
-                else -> repository.getPersonByName(input.value!!, lifecycleOwner)
+    fun search() {
+        when(inputType.value) {
+            "Nome" -> {
+                input.observe(lifecycleOwner, Observer {
+                    viewModelScope.launch {
+                        list = repository.getPersonByName(it, lifecycleOwner)
+                    }
+                })
+            }
+            "Cognome" -> {
+                input.observe(lifecycleOwner, Observer {
+                    viewModelScope.launch {
+                        list = repository.getPersonBySurname(it, lifecycleOwner)
+                    }
+                })
+            }
+            "Telefono" -> {
+                input.observe(lifecycleOwner, Observer {
+                    viewModelScope.launch {
+                        list = repository.getPersonByPhoneNumber(it, lifecycleOwner)
+                    }
+                })
+            }
+            else ->  {
+                input.observe(lifecycleOwner, Observer {
+                    viewModelScope.launch {
+                        list = repository.getPersonByName(it, lifecycleOwner)
+                    }
+                })
             }
         }
-        return list.await()
     }
 }
