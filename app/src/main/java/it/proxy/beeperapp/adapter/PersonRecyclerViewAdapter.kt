@@ -4,10 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import it.proxy.beeperapp.databinding.ListItemBinding
-import it.proxy.beeperapp.rest.Person
 import it.proxy.beeperapp.rest.PersonItem
 
-class PersonRecyclerViewAdapter(private val listPerson: Person): RecyclerView.Adapter<PersonRecyclerViewAdapter.ViewHolder>() {
+class PersonRecyclerViewAdapter(private val listPerson: List<PersonItem>): RecyclerView.Adapter<PersonRecyclerViewAdapter.ViewHolder>() {
     private lateinit var binding: ListItemBinding
     override fun onCreateViewHolder(
         parent: ViewGroup,

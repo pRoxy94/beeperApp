@@ -14,23 +14,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:title="@string/app_name"/>
-
         <TextView
             android:id="@+id/txtSearchFor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            android:layout_margin="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/toggleGroup"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="40dp"
             android:text="@string/strSearchFor"
             android:textSize="24sp"
             android:textAlignment="center"
@@ -43,26 +36,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtSearchFor"
+            app:layout_constraintBottom_toTopOf="@id/input"
             android:gravity="center_horizontal"
-            android:layout_margin="20dp">
+            app:singleSelection="true"
+            android:layout_marginHorizontal="20dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnName"
-                android:layout_width="120dp"
+                android:layout_width="115dp"
                 android:layout_height="wrap_content"
                 style="?attr/materialButtonOutlinedStyle"
                 android:text="@string/strBtnName"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSurname"
-                android:layout_width="120dp"
+                android:layout_width="115dp"
                 android:layout_height="wrap_content"
                 style="?attr/materialButtonOutlinedStyle"
                 android:text="@string/strBtnSurname"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnPhoneNumber"
-                android:layout_width="120dp"
+                android:layout_width="115dp"
                 android:layout_height="wrap_content"
                 style="?attr/materialButtonOutlinedStyle"
                 android:text="@string/strBtnPhoneNumber"/>
@@ -76,7 +71,8 @@
             app:layout_constraintTop_toBottomOf="@id/toggleGroup"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_margin="20dp"
+            app:layout_constraintBottom_toTopOf="@id/btnSearch"
+            android:layout_marginHorizontal="20dp"
             style="@style/TextInputLayoutStyle">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -92,16 +88,18 @@
             app:layout_constraintTop_toBottomOf="@id/input"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="20dp"
+            app:layout_constraintBottom_toTopOf="@id/recyclerPerson"
+            android:layout_marginHorizontal="20dp"
             android:text="@string/strBtnSearch"
             android:onClick="@{()->PersonViewModel.search()}"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerPerson"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="330dp"
             android:layout_margin="20dp"
             app:layout_constraintTop_toBottomOf="@id/btnSearch"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
