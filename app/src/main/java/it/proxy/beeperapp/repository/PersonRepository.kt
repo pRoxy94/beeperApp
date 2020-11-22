@@ -16,7 +16,7 @@ class PersonRepository {
     var resultList = ArrayList<PersonItem>()
     var haveResult = true
 
-    val retrofitInstance = PersonRetrofitInstance
+    private val retrofitInstance = PersonRetrofitInstance
         .getPersonRetrofitInstance()
         .create(PersonService::class.java)
 

@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class PersonRetrofitInstance {
 
     companion object {
-        private val BASE_URL = "http://718c9f33c19d.ngrok.io"
+        private val BASE_URL = "https://csv-magic-service.loca.lt"
 
         fun getPersonRetrofitInstance() : Retrofit {
             return Retrofit.Builder()
